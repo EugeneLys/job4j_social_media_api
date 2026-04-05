@@ -105,6 +105,10 @@
 			<version>5.2.0</version>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
 	</dependencies>
 
 	<build>
@@ -112,25 +116,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>4.15.0</version>
-				<configuration>
-					<propertyFile>${liquibase.config}</propertyFile>
-					<searchPath>src/main/java/ru/job4j/social_media_api</searchPath>
-					<changeLogFile>db/dbchangelog.xml</changeLogFile>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>clearCheckSums</goal>
-							<goal>update</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
