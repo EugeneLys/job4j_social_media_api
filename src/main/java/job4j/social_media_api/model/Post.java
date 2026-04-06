@@ -24,6 +24,9 @@ public class Post {
         this.text = text;
     }
 
+    public Post() {
+    }
+
     public int getId() {
         return id;
     }

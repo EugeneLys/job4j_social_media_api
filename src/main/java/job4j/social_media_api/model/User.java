@@ -1,13 +1,11 @@
 package job4j.social_media_api.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -22,6 +20,9 @@ public class User {
         this.email = email;
         this.name = name;
         this.password = password;
+    }
+
+    public User() {
     }
 
     public int getId() {

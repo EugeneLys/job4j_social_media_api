@@ -3,7 +3,7 @@ package job4j.social_media_api.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Id;
 
 import java.util.Objects;
 
@@ -24,6 +24,9 @@ public class Message {
         this.addressee_id = addressee_id;
         this.title = title;
         this.text = text;
+    }
+
+    public Message() {
     }
 
     public int getId() {
