@@ -1,6 +1,6 @@
-package job4j.social_media_api.repository;
+package job4j.media.repository;
 
-import job4j.social_media_api.model.Message;
+import job4j.media.model.Message;
 import org.springframework.data.repository.CrudRepository;
 
 public interface MessageRepository extends CrudRepository<Message, Integer> {

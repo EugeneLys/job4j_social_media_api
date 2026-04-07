@@ -1,4 +1,4 @@
-package job4j.social_media_api.model;
+package job4j.media.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

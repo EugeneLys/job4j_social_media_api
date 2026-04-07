@@ -1,6 +1,6 @@
-package job4j.social_media_api.repository;
+package job4j.media.repository;
 
-import job4j.social_media_api.model.User;
+import job4j.media.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
