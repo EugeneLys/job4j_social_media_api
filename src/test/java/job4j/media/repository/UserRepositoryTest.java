@@ -32,8 +32,8 @@ public class UserRepositoryTest {
 
     @Test
     public void whenFindAllThenReturnAll() {
-        var user1= new User("user@user.com", "User1", "password1");
-        var user2= new User("user2@user.com", "User2", "password2");
+        var user1 = new User("user@user.com", "User1", "password1");
+        var user2 = new User("user2@user.com", "User2", "password2");
         userRepository.save(user1);
         userRepository.save(user2);
         var users = userRepository.findAll();

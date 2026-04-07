@@ -1,6 +1,7 @@
 package job4j.media.repository;
 
 import job4j.media.model.Post;
+import job4j.media.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -16,6 +17,9 @@ public class PostRepositoryTest {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @BeforeEach
     public void setUp() {
         postRepository.deleteAll();
@@ -23,8 +27,10 @@ public class PostRepositoryTest {
 
     @Test
     public void whenSaveThenFindById() {
+        User user = new User("user@users.com", "User1", "password");
+        userRepository.save(user);
         var myPost = new Post();
-        myPost.setUserId(1);
+        myPost.setAuthor(user);
         myPost.setTitle("post1");
         myPost.setText("This is my post");
         postRepository.save(myPost);
@@ -35,8 +41,10 @@ public class PostRepositoryTest {
 
     @Test
     public void whenFindAllThenReturnAll() {
-        var myPost = new Post(1, "post1", "This is my post");
-        var hisPost = new Post(3, "post3", "This is his post");
+        User user = new User("user@users.com", "User1", "password");
+        userRepository.save(user);
+        var myPost = new Post(user, "post1", "This is my post");
+        var hisPost = new Post(user, "post3", "This is his post");
         postRepository.save(myPost);
         postRepository.save(hisPost);
         var posts = postRepository.findAll();

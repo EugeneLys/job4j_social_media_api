@@ -1,6 +1,7 @@
 package job4j.media.repository;
 
 import job4j.media.model.Message;
+import job4j.media.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -16,6 +17,9 @@ public class MessageRepositoryTest {
     @Autowired
     private MessageRepository messageRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @BeforeEach
     public void setUp() {
         messageRepository.deleteAll();
@@ -23,9 +27,13 @@ public class MessageRepositoryTest {
 
     @Test
     public void whenSaveThenFindById() {
+        User user = new User("user@users.com", "User1", "password");
+        User user2 = new User("user2@users.com", "User2", "password2");
+        userRepository.save(user);
+        userRepository.save(user2);
         var message = new Message();
-        message.setSender_id(1);
-        message.setAddressee_id(3);
+        message.setSender(user);
+        message.setAddressee(user2);
         message.setTitle("hello");
         message.setText("Good luck");
         messageRepository.save(message);
@@ -36,14 +44,18 @@ public class MessageRepositoryTest {
 
     @Test
     public void whenFindAllThenReturnAll() {
+        User user = new User("user@users.com", "User1", "password");
+        User user2 = new User("user2@users.com", "User2", "password2");
+        userRepository.save(user);
+        userRepository.save(user2);
         var message = new Message();
-        message.setSender_id(1);
-        message.setAddressee_id(3);
+        message.setSender(user);
+        message.setAddressee(user2);
         message.setTitle("hello");
         message.setText("Good luck");
         var message2 = new Message();
-        message2.setSender_id(7);
-        message2.setAddressee_id(1);
+        message2.setSender(user);
+        message2.setAddressee(user2);
         message2.setTitle("hi");
         message2.setText("Regards");
         messageRepository.save(message);

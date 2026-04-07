@@ -1,9 +1,6 @@
 package job4j.media.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -14,14 +11,14 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int sender_id;
-    private int addressee_id;
+    @ManyToOne private User sender;
+    @ManyToOne private User addressee;
     private String title;
     private String text;
 
-    public Message(int sender_id, int addressee_id, String title, String text) {
-        this.sender_id = sender_id;
-        this.addressee_id = addressee_id;
+    public Message(User sender, User addressee, String title, String text) {
+        this.sender = sender;
+        this.addressee = addressee;
         this.title = title;
         this.text = text;
     }
@@ -37,20 +34,20 @@ public class Message {
         this.id = id;
     }
 
-    public int getSender_id() {
-        return sender_id;
+    public User getSender() {
+        return sender;
     }
 
-    public void setSender_id(int sender_id) {
-        this.sender_id = sender_id;
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 
-    public int getAddressee_id() {
-        return addressee_id;
+    public User getAddressee_id() {
+        return addressee;
     }
 
-    public void setAddressee_id(int addressee_id) {
-        this.addressee_id = addressee_id;
+    public void setAddressee(User addressee) {
+        this.addressee = addressee;
     }
 
     public String getTitle() {
@@ -74,11 +71,11 @@ public class Message {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message = (Message) o;
-        return sender_id == message.sender_id && addressee_id == message.addressee_id && Objects.equals(title, message.title);
+        return id == message.id && Objects.equals(title, message.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sender_id, addressee_id, title);
+        return Objects.hash(sender, addressee, title);
     }
 }
