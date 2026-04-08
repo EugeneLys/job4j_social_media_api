@@ -11,8 +11,10 @@ public class Follower {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne private User follower;
-    @ManyToOne private User followed;
+    @ManyToOne
+    private User follower;
+    @ManyToOne
+    private User followed;
 
     public Follower(User follower, User followed) {
         this.follower = follower;

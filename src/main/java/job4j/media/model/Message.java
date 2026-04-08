@@ -11,8 +11,10 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne private User sender;
-    @ManyToOne private User addressee;
+    @ManyToOne
+    private User sender;
+    @ManyToOne
+    private User addressee;
     private String title;
     private String text;
 

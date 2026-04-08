@@ -11,7 +11,8 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne private User author;
+    @ManyToOne
+    private User author;
     private String title;
     private String text;
 

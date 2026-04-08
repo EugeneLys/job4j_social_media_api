@@ -9,14 +9,6 @@ import java.util.Objects;
 @Table(name = "users")
 public class User {
 
-    public static final Map<String, String> COLUMN_MAPPING = Map.of(
-            "id", "id",
-            "email", "email",
-            "name", "name",
-            "password", "password"
-    );
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
