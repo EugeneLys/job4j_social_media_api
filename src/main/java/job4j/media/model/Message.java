@@ -42,7 +42,7 @@ public class Message {
         this.sender = sender;
     }
 
-    public User getAddressee_id() {
+    public User getAddressee() {
         return addressee;
     }
 
@@ -68,8 +68,12 @@ public class Message {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Message message = (Message) o;
         return id == message.id && Objects.equals(title, message.title);
     }

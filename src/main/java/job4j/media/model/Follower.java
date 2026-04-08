@@ -48,8 +48,12 @@ public class Follower {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Follower follower1 = (Follower) o;
         return id == follower1.id && Objects.equals(follower, follower1.follower)
                 && Objects.equals(followed, follower1.followed);
