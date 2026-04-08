@@ -2,6 +2,8 @@ package job4j.media.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -15,11 +17,13 @@ public class Post {
     private User author;
     private String title;
     private String text;
+    private LocalDateTime createdAt;
 
-    public Post(User author, String title, String text) {
+    public Post(User author, String title, String text, LocalDateTime createdAt) {
         this.author = author;
         this.title = title;
         this.text = text;
+        this.createdAt = createdAt;
     }
 
     public Post() {

@@ -2,7 +2,6 @@ package job4j.media.model;
 
 import jakarta.persistence.*;
 
-import java.util.Map;
 import java.util.Objects;
 
 @Entity
