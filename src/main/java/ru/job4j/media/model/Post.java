@@ -1,12 +1,12 @@
-package job4j.media.model;
+package ru.job4j.media.model;
 
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
+@Table(name = "posts")
 public class Post {
 
     @Id
@@ -14,16 +14,21 @@ public class Post {
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User author;
     private String title;
     private String text;
     private LocalDateTime createdAt;
 
-    public Post(User author, String title, String text, LocalDateTime createdAt) {
+    @ManyToOne
+    private File file;
+
+    public Post(User author, String title, String text, LocalDateTime createdAt, File file) {
         this.author = author;
         this.title = title;
         this.text = text;
         this.createdAt = createdAt;
+        this.file = file;
     }
 
     public Post() {
@@ -59,6 +64,22 @@ public class Post {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 
     @Override

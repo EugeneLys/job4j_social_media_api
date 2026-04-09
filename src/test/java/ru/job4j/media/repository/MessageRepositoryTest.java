@@ -1,7 +1,8 @@
-package job4j.media.repository;
+package ru.job4j.media.repository;
 
-import job4j.media.model.Message;
-import job4j.media.model.User;
+import ru.job4j.media.model.Message;
+import ru.job4j.media.model.User;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -38,8 +39,8 @@ public class MessageRepositoryTest {
         message.setText("Good luck");
         messageRepository.save(message);
         var found = messageRepository.findById(message.getId());
-        assertThat(found).isPresent();
-        assertThat(found.get().getTitle()).isEqualTo("hello");
+        Assertions.assertThat(found).isPresent();
+        Assertions.assertThat(found.get().getTitle()).isEqualTo("hello");
     }
 
     @Test
@@ -61,7 +62,7 @@ public class MessageRepositoryTest {
         messageRepository.save(message);
         messageRepository.save(message2);
         var messages = messageRepository.findAll();
-        assertThat(messages).hasSize(2);
-        assertThat(messages).extracting(Message::getText).contains("Good luck", "Regards");
+        Assertions.assertThat(messages).hasSize(2);
+        Assertions.assertThat(messages).extracting(Message::getText).contains("Good luck", "Regards");
     }
 }

@@ -1,4 +1,4 @@
-package job4j.media.model;
+package ru.job4j.media.model;
 
 import jakarta.persistence.*;
 

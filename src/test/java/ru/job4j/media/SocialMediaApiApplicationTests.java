@@ -1,4 +1,4 @@
-package job4j.media;
+package ru.job4j.media;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

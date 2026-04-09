@@ -1,7 +1,7 @@
-package job4j.media.repository;
+package ru.job4j.media.repository;
 
-import job4j.media.model.Follower;
-import job4j.media.model.User;
+import ru.job4j.media.model.Follower;
+import ru.job4j.media.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
