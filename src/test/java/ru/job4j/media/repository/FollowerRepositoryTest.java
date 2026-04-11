@@ -7,7 +7,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.job4j.media.service.FollowerService;
+import ru.job4j.media.service.SimpleFollowerService;
 
+import java.util.Collection;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -52,5 +58,22 @@ class FollowerRepositoryTest {
         var followers = followerRepository.findAll();
         assertThat(followers).hasSize(2);
         assertThat(followers).extracting(Follower::getFollower).contains(user1, user2);
+    }
+
+    @Test
+    public void whenAcceptThenFindById() {
+        var user1 = new User("user@user.com", "User1", "password1");
+        var user2 = new User("user2@user.com", "User2", "password2");
+        userRepository.save(user1);
+        userRepository.save(user2);
+        Follower f1 = new Follower(user1, user2);
+        FollowerService followerService = new SimpleFollowerService(followerRepository);
+        followerService.follow(f1);
+        assertThat(followerRepository.findAll()).hasSize(1);
+        int id = followerService.accept(f1);
+        assertThat(followerRepository.findAll()).hasSize(2);
+        Follower check = followerRepository.findById(id).get();
+        assertThat(check.getFollower()).isEqualTo(user2);
+        assertThat(check.getFollowed()).isEqualTo(user1);
     }
 }

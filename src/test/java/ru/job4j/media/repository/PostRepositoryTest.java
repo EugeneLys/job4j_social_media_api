@@ -122,7 +122,7 @@ public class PostRepositoryTest {
         var myPost = new Post(user, "post1", "text1", LocalDateTime.now(), null);
         postRepository.save(myPost);
         int id = myPost.getId();
-        postRepository.updatePost("updatedTitle", "updatedText", id);
+        postRepository.updatePost("updatedTitle", "updatedText", null, id);
         var found = postRepository.findById(id);
         Assertions.assertThat(found.get().getTitle()).isEqualTo("updatedTitle");
         Assertions.assertThat(found.get().getText()).isEqualTo("updatedText");

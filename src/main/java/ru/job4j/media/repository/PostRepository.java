@@ -1,6 +1,7 @@
 package ru.job4j.media.repository;
 
 import jakarta.transaction.Transactional;
+import ru.job4j.media.model.File;
 import ru.job4j.media.model.Post;
 import ru.job4j.media.model.User;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,7 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
             text = :text
             WHERE id = :id
             """, nativeQuery = true)
-    int updatePost(@Param("title") String title, @Param("text") String text, @Param("id") int id);
+    int updatePost(@Param("title") String title, @Param("text") String text, @Param("file") File file, @Param("id") int id);
 
     @Transactional
     @Modifying(clearAutomatically = true)
