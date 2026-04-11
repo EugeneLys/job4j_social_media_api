@@ -1,8 +1,10 @@
 package ru.job4j.media.service;
 
+import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.media.model.Follower;
 import ru.job4j.media.repository.FollowerRepository;
 
+@Transactional
 public class SimpleFollowerService implements FollowerService {
 
     private final FollowerRepository followerRepository;

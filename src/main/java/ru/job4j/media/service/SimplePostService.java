@@ -1,9 +1,11 @@
 package ru.job4j.media.service;
 
+import jakarta.transaction.Transactional;
 import ru.job4j.media.dto.FileDto;
 import ru.job4j.media.model.Post;
 import ru.job4j.media.repository.PostRepository;
 
+@Transactional
 public class SimplePostService implements PostService {
 
     private final PostRepository postRepository;
