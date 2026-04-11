@@ -14,7 +14,6 @@ public class SimplePostService implements PostService {
         this.postRepository = postRepository;
     }
 
-
     @Override
     public Post create(Post post, FileDto image) {
         return postRepository.save(post);
