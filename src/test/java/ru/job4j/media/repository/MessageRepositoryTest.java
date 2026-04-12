@@ -17,11 +17,20 @@ public class MessageRepositoryTest {
     private MessageRepository messageRepository;
 
     @Autowired
+    private FollowerRepository followerRepository;
+
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
     @BeforeEach
     public void setUp() {
+        followerRepository.deleteAll();
+        postRepository.deleteAll();
         messageRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test

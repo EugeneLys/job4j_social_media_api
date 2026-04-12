@@ -18,7 +18,7 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
 
     List<Post> findByAuthor(User author);
 
-    List<Post>findByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
+    List<Post> findByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
 
     Page<Post> findByOrderByCreatedAt(Pageable pageable);
 

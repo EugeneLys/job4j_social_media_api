@@ -17,7 +17,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
             """)
     Optional<User> findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 
-
     @Query(value = """
             SELECT users.* FROM users JOIN followers
             on users.id = followers.follower_id

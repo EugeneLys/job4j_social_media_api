@@ -18,12 +18,25 @@ class FollowerRepositoryTest {
 
     @Autowired
     private FollowerRepository followerRepository;
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    PostRepository postRepository;
+
+    @Autowired
+    private MessageRepository messageRepository;
+
+    FollowerRepositoryTest() {
+    }
 
     @BeforeEach
     public void setUp() {
         followerRepository.deleteAll();
+        postRepository.deleteAll();
+        messageRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
