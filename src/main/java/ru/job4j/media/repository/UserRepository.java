@@ -1,5 +1,7 @@
 package ru.job4j.media.repository;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.media.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -31,5 +33,30 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     WHERE f1.followed_id = :id AND f2.follower_id = :id
     """, nativeQuery = true)
     List<User> findFriendsById(@Param("id") int id);
+
+    @Modifying
+    @Transactional
+    @Query(value = """
+    UPDATE users
+    SET email = :#{#user.email},
+    name = :#{#user.name},
+    password = :#{#user.password}
+    WHERE id = :#{#user.id}
+    """, nativeQuery = true)
+    int update(@Param("user") User user);
+
+    @Modifying
+    @Transactional
+    @Query(value = """
+    UPDATE users
+    SET email = COALESCE(CAST(:#{#user.email} AS VARCHAR), email),
+    name = COALESCE(CAST(:#{#user.name} AS VARCHAR), name),
+    password = COALESCE(CAST(:#{#user.password} AS VARCHAR), password)
+    WHERE id = :#{#user.id}
+    """, nativeQuery = true)
+    int patch(@Param("user") User user);
+
+    @Override
+    List<User> findAll();
 
 }

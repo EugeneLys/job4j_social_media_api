@@ -54,4 +54,16 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
             WHERE followed_id = :id)
             """, nativeQuery = true)
     Page<Post> findOrderDescByFollowers(Pageable pageable, @Param("id") int id);
+
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query(value = """
+    UPDATE posts
+    SET title = COALESCE(CAST(:#{#post.title} AS VARCHAR), title),
+        text = COALESCE(CAST(:#{#post.text} AS VARCHAR), text),
+        user_id = COALESCE(CAST(:#{#post.author != null ? #post.author.id : null} AS INTEGER), user_id),
+        file_id = COALESCE(CAST(:#{#post.file != null ? #post.file.id : null} AS INTEGER), file_id)
+    WHERE id = :#{#post.id}
+    """, nativeQuery = true)
+    int patch(@Param("post") Post post);
 }

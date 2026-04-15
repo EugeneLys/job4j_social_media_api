@@ -135,6 +135,21 @@ public class PostRepositoryTest {
     }
 
     @Test
+    public void whenPatchPost() {
+        User user = new User("user@users.com", "User1", "password");
+        userRepository.save(user);
+        var myPost = new Post(user, "post1", "text1", LocalDateTime.now(), null);
+        postRepository.save(myPost);
+        int id = myPost.getId();
+        var myPost2 = new Post(user, "updatedTitle", null, LocalDateTime.now(), null);
+        myPost2.setId(myPost.getId());
+        postRepository.patch(myPost2);
+        var found = postRepository.findById(id);
+        Assertions.assertThat(found.get().getTitle()).isEqualTo("updatedTitle");
+        Assertions.assertThat(found.get().getText()).isEqualTo("text1");
+    }
+
+    @Test
     public void whenDeleteFileFromPost() {
         User user = new User("user@users.com", "User1", "password");
         userRepository.save(user);

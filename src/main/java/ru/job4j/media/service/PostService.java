@@ -3,6 +3,8 @@ package ru.job4j.media.service;
 import ru.job4j.media.dto.FileDto;
 import ru.job4j.media.model.Post;
 
+import java.util.Optional;
+
 public interface PostService {
 
     Post create(Post post, FileDto image);
@@ -10,4 +12,8 @@ public interface PostService {
     boolean update(Post post, FileDto image);
 
     boolean deleteById(int id);
+
+    Optional<Post> findById(int id);
+
+    int patch(Post post);
 }

@@ -94,4 +94,34 @@ public class UserRepositoryTest {
         Assertions.assertThat(users).hasSize(1);
         Assertions.assertThat(users).extracting(User::getName).contains("User2");
     }
+
+    @Test
+    public void whenUpdateThenFindById() {
+        var user = new User("user@user.com", "User1", "password1");
+        userRepository.save(user);
+        var foundUser = userRepository.findById(user.getId());
+        Assertions.assertThat(foundUser).isPresent();
+        var user2 = new User("user2@user.com", "User2", "password2");
+        user2.setId(user.getId());
+        userRepository.update(user2);
+        foundUser = userRepository.findById(user2.getId());
+        Assertions.assertThat(foundUser).isPresent();
+        Assertions.assertThat(foundUser.get().getName()).isEqualTo("User2");
+    }
+
+    @Test
+    public void whenPatchThenFindById() {
+        var user = new User("user@user.com", "User1", "password1");
+        userRepository.save(user);
+        var foundUser = userRepository.findById(user.getId());
+        Assertions.assertThat(foundUser).isPresent();
+        var user2 = new User(null, "User2", null);
+        user2.setId(user.getId());
+        userRepository.patch(user2);
+        foundUser = userRepository.findById(user2.getId());
+        Assertions.assertThat(foundUser).isPresent();
+        Assertions.assertThat(foundUser.get().getName()).isEqualTo("User2");
+        Assertions.assertThat(foundUser.get().getEmail()).isEqualTo("user@user.com");
+        Assertions.assertThat(foundUser.get().getPassword()).isEqualTo("password1");
+    }
 }
