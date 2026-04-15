@@ -1,9 +1,6 @@
 package ru.job4j.media.repository;
 
-import ru.job4j.media.model.File;
-import ru.job4j.media.model.Follower;
-import ru.job4j.media.model.Post;
-import ru.job4j.media.model.User;
+import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +8,10 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
+import ru.job4j.media.model.File;
+import ru.job4j.media.model.Follower;
+import ru.job4j.media.model.Post;
+import ru.job4j.media.model.User;
 
 import java.time.LocalDateTime;
 
@@ -35,17 +36,21 @@ public class PostRepositoryTest {
     @Autowired
     private MessageRepository messageRepository;
 
+    @Autowired
+    private EntityManager entityManager;
+
     @BeforeEach
     public void setUp() {
         followerRepository.deleteAll();
         postRepository.deleteAll();
         messageRepository.deleteAll();
         userRepository.deleteAll();
+        fileRepository.deleteAll();
     }
 
     @Test
     public void whenSaveThenFindById() {
-        User user = new User("user@users.com", "User1", "password");
+        User user = new User("user1@users.com", "User1", "password");
         userRepository.save(user);
         var myPost = new Post();
         myPost.setAuthor(user);
@@ -59,7 +64,7 @@ public class PostRepositoryTest {
 
     @Test
     public void whenFindAllThenReturnAll() {
-        User user = new User("user@users.com", "User1", "password");
+        User user = new User("user2@users.com", "User1", "password");
         userRepository.save(user);
         var myPost = new Post(user, "post1", "This is my post", LocalDateTime.now(), null);
         var hisPost = new Post(user, "post3", "This is his post", LocalDateTime.now(), null);
@@ -72,8 +77,8 @@ public class PostRepositoryTest {
 
     @Test
     public void whenFindByAuthor() {
-        User user = new User("user@users.com", "User1", "password");
-        User user2 = new User("user2@users.com", "User2", "password2");
+        User user = new User("user3@users.com", "User1", "password");
+        User user2 = new User("user4@users.com", "User2", "password2");
         userRepository.save(user);
         userRepository.save(user2);
         var first = new Post(user, "post1", "This is user1 post", LocalDateTime.now(), null);
@@ -89,7 +94,7 @@ public class PostRepositoryTest {
 
     @Test
     public void whenFindByCreatedAtBetween() {
-        User user = new User("user@users.com", "User1", "password");
+        User user = new User("user5@users.com", "User1", "password");
         userRepository.save(user);
         var first = new Post(user, "post1", "This is user1 post", LocalDateTime.now(), null);
         var second = new Post(user, "post2", "This is another user1 post", LocalDateTime.now(), null);
@@ -105,7 +110,7 @@ public class PostRepositoryTest {
 
     @Test
     public void whenFindOrderByCreatedAt() {
-        User user = new User("user@users.com", "User1", "password");
+        User user = new User("user6@users.com", "User1", "password");
         userRepository.save(user);
         var first = new Post(user, "post1", "This should be in list",
                 LocalDateTime.now().plusDays(1), null);
@@ -123,7 +128,7 @@ public class PostRepositoryTest {
 
     @Test
     public void whenUpdatePost() {
-        User user = new User("user@users.com", "User1", "password");
+        User user = new User("user7@users.com", "User1", "password");
         userRepository.save(user);
         var myPost = new Post(user, "post1", "text1", LocalDateTime.now(), null);
         postRepository.save(myPost);
@@ -136,7 +141,7 @@ public class PostRepositoryTest {
 
     @Test
     public void whenPatchPost() {
-        User user = new User("user@users.com", "User1", "password");
+        User user = new User("user8@users.com", "User1", "password");
         userRepository.save(user);
         var myPost = new Post(user, "post1", "text1", LocalDateTime.now(), null);
         postRepository.save(myPost);
@@ -151,7 +156,7 @@ public class PostRepositoryTest {
 
     @Test
     public void whenDeleteFileFromPost() {
-        User user = new User("user@users.com", "User1", "password");
+        User user = new User("user9@users.com", "User1", "password");
         userRepository.save(user);
         File file = new File("file1", "path1");
         fileRepository.save(file);
@@ -164,7 +169,7 @@ public class PostRepositoryTest {
 
     @Test
     public void whenDeletePostById() {
-        User user = new User("user@users.com", "User1", "password");
+        User user = new User("user10@users.com", "User1", "password");
         userRepository.save(user);
         var myPost = new Post(user, "post1", "text1", LocalDateTime.now(), null);
         postRepository.save(myPost);
@@ -176,9 +181,9 @@ public class PostRepositoryTest {
 
     @Test
     public void whenFindPostsOrderDescByFollowers() {
-        User user1 = new User("user1@users.com", "User1", "password");
-        User user2 = new User("user2@users.com", "User2", "password");
-        User user3 = new User("user3@users.com", "User3", "password");
+        User user1 = new User("user11@users.com", "User1", "password");
+        User user2 = new User("user12@users.com", "User2", "password");
+        User user3 = new User("user13@users.com", "User3", "password");
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);

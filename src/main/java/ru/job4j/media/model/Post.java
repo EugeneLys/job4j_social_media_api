@@ -18,9 +18,11 @@ public class Post {
     private User author;
     private String title;
     private String text;
+    @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
     @ManyToOne
+    @JoinColumn(name = "file_id")
     private File file;
 
     public Post(User author, String title, String text, LocalDateTime createdAt, File file) {
