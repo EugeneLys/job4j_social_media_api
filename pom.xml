@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.5</version>
+		<version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>job4j</groupId>
@@ -34,7 +34,8 @@
 		<profile>
 			<id>test</id>
 			<properties>
-				<liquibase.config>src/main/java/ru/job4j/social_media_api/db/liquibase_test.properties</liquibase.config>
+				<liquibase.config>src/main/java/ru/job4j/social_media_api
+					/db/liquibase_test.properties</liquibase.config>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
