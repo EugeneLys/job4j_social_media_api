@@ -1,4 +1,4 @@
-CREATE TABLE messages
+CREATE TABLE IF NOT EXISTS messages
 (
     id              SERIAL PRIMARY KEY,
     sender_id       INTEGER REFERENCES users(id),

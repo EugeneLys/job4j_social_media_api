@@ -1,4 +1,4 @@
-create table followers
+create table IF NOT EXISTS followers
 (
     id              SERIAL PRIMARY KEY,
     follower_id     INTEGER REFERENCES users(id) ON DELETE CASCADE,
