@@ -4,8 +4,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import ru.job4j.media.dto.FileDto;
 import ru.job4j.media.model.Post;
+import ru.job4j.media.model.User;
 import ru.job4j.media.repository.PostRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
