@@ -2,7 +2,6 @@ package ru.job4j.media.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Objects;
@@ -14,7 +13,6 @@ public class File {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Positive
     private int id;
     @NotBlank
     private String name;
