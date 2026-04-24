@@ -1,19 +1,30 @@
 package ru.job4j.media.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Objects;
 
+@Validated
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Positive
     private int id;
-
+    @Email(message = "Email must be correct")
     private String email;
+    @NotBlank(message = "username is empty")
+    @Length(min = 2,
+            message = "username must be from 2 letters length")
     private String name;
+    @NotBlank
     private String password;
 
     public User(String email, String name, String password) {

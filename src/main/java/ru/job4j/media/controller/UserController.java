@@ -1,5 +1,8 @@
 package ru.job4j.media.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,14 +23,16 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> get(@PathVariable("id") int id) {
+    public ResponseEntity<User> get(@PathVariable("id")
+                                        @NotNull
+                                        @Min(value = 1, message = "User Id must be no less than 1") int id) {
         return userService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<User> save(@RequestBody User user) {
+    public ResponseEntity<User> save(@Valid @RequestBody User user) {
         userService.save(user);
         var uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -40,7 +45,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody User user) {
+    public ResponseEntity<Void> update(@Valid @RequestBody User user) {
         if (userService.update(user) > 0) {
             return ResponseEntity.ok().build();
         }
@@ -48,7 +53,7 @@ public class UserController {
     }
 
     @PatchMapping
-    public ResponseEntity<Void> change(@RequestBody User user) {
+    public ResponseEntity<Void> change(@Valid @RequestBody User user) {
         if (userService.patch(user) > 0) {
             return ResponseEntity.ok().build();
         }
@@ -56,7 +61,9 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeById(@PathVariable int id) {
+    public ResponseEntity<Void> removeById(@PathVariable
+                                               @NotNull
+                                               @Min(value = 1, message = "User Id must be no less than 1")int id) {
         if (userService.deleteById(id)) {
             return ResponseEntity.noContent().build();
         }

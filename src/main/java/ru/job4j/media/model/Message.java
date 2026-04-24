@@ -1,21 +1,28 @@
 package ru.job4j.media.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Objects;
 
+@Validated
 @Entity
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Positive
     private int id;
-
     @ManyToOne
     private User sender;
     @ManyToOne
     private User addressee;
+    @NotBlank
     private String title;
+    @NotBlank
     private String text;
 
     public Message(User sender, User addressee, String title, String text) {

@@ -1,7 +1,12 @@
 package ru.job4j.media.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import org.springframework.validation.annotation.Validated;
+
+@Validated
 public class FileDto {
 
+    @NotBlank
     private String name;
 
     private byte[] content;

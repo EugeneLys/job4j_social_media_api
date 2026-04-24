@@ -1,13 +1,19 @@
 package ru.job4j.media.dto;
 
+import jakarta.validation.constraints.Positive;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.validation.annotation.Validated;
 import ru.job4j.media.model.Post;
 
-import java.util.Collection;
 import java.util.List;
 
+@Validated
 public class PostsDto {
 
+    @Positive
     private int userId;
+    @Length(min = 2,
+            message = "username must be from 2 letters length")
     private String name;
     List<Post> posts;
 

@@ -1,5 +1,8 @@
 package ru.job4j.media.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,15 +29,17 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> get(@PathVariable("id") int id) {
+    public ResponseEntity<Post> get(@PathVariable("id")
+                                        @NotNull
+                                        @Min(value = 1, message = "Post Id must be no less than 1") int id) {
         return postService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Post> save(@RequestPart("post") Post post,
-                                     @RequestPart("file") MultipartFile file) throws IOException {
+    public ResponseEntity<Post> save(@Valid @RequestPart("post") Post post,
+                                     @Valid @RequestPart("file") MultipartFile file) throws IOException {
         FileDto fileDto = new FileDto(file.getOriginalFilename(), file.getBytes());
         postService.create(post, fileDto);
         var uri = ServletUriComponentsBuilder
@@ -48,8 +53,8 @@ public class PostController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestPart("post") Post post,
-                                       @RequestPart("file") MultipartFile file) throws IOException {
+    public ResponseEntity<Void> update(@Valid @RequestPart("post") Post post,
+                                       @Valid @RequestPart("file") MultipartFile file) throws IOException {
         FileDto fileDto = new FileDto(file.getOriginalFilename(), file.getBytes());
         if (postService.update(post, fileDto)) {
             return ResponseEntity.ok().build();
@@ -58,8 +63,8 @@ public class PostController {
     }
 
     @PatchMapping
-    public ResponseEntity<Void> change(@RequestPart("post") Post post,
-                                       @RequestPart("file") MultipartFile file) throws IOException {
+    public ResponseEntity<Void> change(@Valid @RequestPart("post") Post post,
+                                       @Valid @RequestPart("file") MultipartFile file) throws IOException {
         FileDto fileDto = new FileDto(file.getOriginalFilename(), file.getBytes());
         if (postService.patch(post) > 0) {
             return ResponseEntity.ok().build();

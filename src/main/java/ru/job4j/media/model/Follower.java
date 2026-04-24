@@ -1,15 +1,19 @@
 package ru.job4j.media.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Objects;
 
+@Validated
 @Entity
 @Table(name = "followers")
 public class Follower {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Positive
     private int id;
 
     @ManyToOne

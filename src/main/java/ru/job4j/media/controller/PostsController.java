@@ -1,5 +1,8 @@
 package ru.job4j.media.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +28,9 @@ public class PostsController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Post>> get(@PathVariable("userId") int id) {
+    public ResponseEntity<List<Post>> get(@PathVariable("userId")
+                                              @NotNull
+                                              @Min(value = 1, message = "User Id must be no less than 1") int id) {
         List<Post> posts = postsService.findByAuthorId(id);
         return ResponseEntity.ok(posts);
     }

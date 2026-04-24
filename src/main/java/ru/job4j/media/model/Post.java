@@ -1,22 +1,29 @@
 package ru.job4j.media.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Validated
 @Entity
 @Table(name = "posts")
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Positive
     private int id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User author;
+    @NotBlank
     private String title;
+    @NotBlank
     private String text;
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
