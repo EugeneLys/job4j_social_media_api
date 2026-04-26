@@ -1,5 +1,6 @@
 package ru.job4j.media.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.validation.annotation.Validated;
@@ -8,18 +9,23 @@ import java.util.Objects;
 
 @Validated
 @Entity
+@Schema(description = "Message Model Information")
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
+    @Schema(description = "User who sent")
     private User sender;
     @ManyToOne
+    @Schema(description = "To whom it was sent")
     private User addressee;
     @NotBlank
+    @Schema(description = "Title of the message")
     private String title;
     @NotBlank
+    @Schema(description = "Message itself")
     private String text;
 
     public Message(User sender, User addressee, String title, String text) {

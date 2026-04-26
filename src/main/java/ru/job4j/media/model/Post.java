@@ -1,5 +1,6 @@
 package ru.job4j.media.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.validation.annotation.Validated;
@@ -10,6 +11,7 @@ import java.util.Objects;
 @Validated
 @Entity
 @Table(name = "posts")
+@Schema(description = "Post Model Information")
 public class Post {
 
     @Id
@@ -18,12 +20,16 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @Schema(description = "User, wha created post")
     private User author;
     @NotBlank
+    @Schema(description = "Title of the post")
     private String title;
     @NotBlank
+    @Schema(description = "Full text of this post")
     private String text;
     @Column(name = "createdAt")
+    @Schema(description = "When this post was created")
     private LocalDateTime createdAt;
 
     @ManyToOne

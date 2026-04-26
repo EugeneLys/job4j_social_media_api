@@ -1,5 +1,11 @@
 package ru.job4j.media.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -13,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.job4j.media.model.User;
 import ru.job4j.media.service.UserService;
 
+@Tag(name = "UserController", description = "UserController management APIs")
 @Validated
 @Slf4j
 @AllArgsConstructor
@@ -22,6 +29,15 @@ public class UserController {
 
     private final UserService userService;
 
+    @Operation(
+            summary = "Retrieve a User by Id",
+            description = "Get a User object by specifying its Id. "
+                    + "The response is User object with userId, email, name and password.",
+            tags = { "User", "get" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = User.class),
+                    mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/{id}")
     public ResponseEntity<User> get(@PathVariable("id")
                                         @NotNull
@@ -31,6 +47,14 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(
+            summary = "Save new User in User Repository",
+            description = "New User will be added with unique Id",
+            tags = { "User", "save" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = User.class),
+                    mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
     @PostMapping
     public ResponseEntity<User> save(@Valid @RequestBody User user) {
         userService.save(user);
@@ -44,6 +68,14 @@ public class UserController {
                 .body(user);
     }
 
+    @Operation(
+            summary = "Update user",
+            description = "Updates user with specific Id totally",
+            tags = { "User", "update" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = User.class),
+                    mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
     @PutMapping
     public ResponseEntity<Void> update(@Valid @RequestBody User user) {
         if (userService.update(user) > 0) {
@@ -52,6 +84,14 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(
+            summary = "Changes some fields of user",
+            description = "Changes some fields of user, not all of them",
+            tags = { "User", "change" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = User.class),
+                    mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
     @PatchMapping
     public ResponseEntity<Void> change(@Valid @RequestBody User user) {
         if (userService.patch(user) > 0) {
@@ -60,6 +100,14 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(
+            summary = "Remove user",
+            description = "Finds user by Id and deletes from base",
+            tags = { "User", "remove" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = User.class),
+                    mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removeById(@PathVariable
                                                @NotNull

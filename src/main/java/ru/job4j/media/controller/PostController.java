@@ -1,5 +1,11 @@
 package ru.job4j.media.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -16,6 +22,7 @@ import ru.job4j.media.service.PostService;
 
 import java.io.IOException;
 
+@Tag(name = "PostController", description = "PostController management APIs")
 @Validated
 @Slf4j
 @RestController
@@ -28,6 +35,15 @@ public class PostController {
         this.postService = postService;
     }
 
+    @Operation(
+            summary = "Retrieve a post by Id",
+            description = "Get a Post object by specifying its Id. "
+                    + "The response is Post object with author (user), title, text and time of creation.",
+            tags = { "Post", "get" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Post.class),
+                    mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/{id}")
     public ResponseEntity<Post> get(@PathVariable("id")
                                         @NotNull
@@ -37,6 +53,14 @@ public class PostController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Operation(
+            summary = "Save new post",
+            description = "Save new post with attached file or without.",
+            tags = { "Post", "save" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Post.class),
+                    mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
     @PostMapping
     public ResponseEntity<Post> save(@Valid @RequestPart("post") Post post,
                                      @Valid @RequestPart("file") MultipartFile file) throws IOException {
@@ -52,6 +76,14 @@ public class PostController {
                 .body(post);
     }
 
+    @Operation(
+            summary = "Update a post",
+            description = "Replace a post by new one.",
+            tags = { "Post", "update" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Post.class),
+                    mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
     @PutMapping
     public ResponseEntity<Void> update(@Valid @RequestPart("post") Post post,
                                        @Valid @RequestPart("file") MultipartFile file) throws IOException {
@@ -62,6 +94,14 @@ public class PostController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(
+            summary = "Change post",
+            description = "Change something in this post - title or text or something else.",
+            tags = { "Post", "change" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Post.class),
+                    mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
     @PatchMapping
     public ResponseEntity<Void> change(@Valid @RequestPart("post") Post post,
                                        @Valid @RequestPart("file") MultipartFile file) throws IOException {
@@ -72,6 +112,14 @@ public class PostController {
         return ResponseEntity.notFound().build();
     }
 
+    @Operation(
+            summary = "Remove post",
+            description = "Remove post from base by Id.",
+            tags = { "Post", "remove" })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Post.class),
+                    mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removeById(@PathVariable int id) {
         if (postService.deleteById(id)) {

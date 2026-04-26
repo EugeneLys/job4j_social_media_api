@@ -1,6 +1,8 @@
 package ru.job4j.media.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Objects;
@@ -8,6 +10,7 @@ import java.util.Objects;
 @Validated
 @Entity
 @Table(name = "followers")
+@Schema(description = "Follower Model Information")
 public class Follower {
 
     @Id
@@ -15,8 +18,12 @@ public class Follower {
     private int id;
 
     @ManyToOne
+    @Schema(description = "This user is follower")
+    @NotNull
     private User follower;
     @ManyToOne
+    @Schema(description = "This user is followed by follower")
+    @NotNull
     private User followed;
 
     public Follower(User follower, User followed) {

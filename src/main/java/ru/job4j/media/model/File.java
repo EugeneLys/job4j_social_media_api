@@ -1,5 +1,6 @@
 package ru.job4j.media.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.validation.annotation.Validated;
@@ -9,14 +10,17 @@ import java.util.Objects;
 @Validated
 @Entity
 @Table(name = "files")
+@Schema(description = "File Model Information")
 public class File {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotBlank
+    @Schema(description = "Name of attached file")
     private String name;
     @NotBlank
+    @Schema(description = "path to this file")
     private String path;
 
     public File(String name, String path) {

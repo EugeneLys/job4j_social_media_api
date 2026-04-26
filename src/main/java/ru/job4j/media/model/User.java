@@ -1,5 +1,6 @@
 package ru.job4j.media.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -8,20 +9,23 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.Objects;
 
-@Validated
 @Entity
 @Table(name = "users")
+@Schema(description = "User Model Information")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Schema(description = "User's email address", example = "user@userdomain.com")
     @Email(message = "Email must be correct")
     private String email;
+    @Schema(description = "User's name", example = "Alex")
     @NotBlank(message = "username is empty")
     @Length(min = 2,
             message = "username must be from 2 letters length")
     private String name;
+    @Schema(description = "User's password for authorization", example = "password")
     @NotBlank
     private String password;
 

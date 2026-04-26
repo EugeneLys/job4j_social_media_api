@@ -6,7 +6,6 @@ import org.springframework.validation.annotation.Validated;
 import ru.job4j.media.model.Follower;
 import ru.job4j.media.repository.FollowerRepository;
 
-@Validated
 @Transactional
 public class SimpleFollowerService implements FollowerService {
 
@@ -17,17 +16,18 @@ public class SimpleFollowerService implements FollowerService {
     }
 
     @Override
-    public void delete(@Valid Follower follower) {
+    public void delete(Follower follower) {
         followerRepository.delete(follower);
     }
 
     @Override
-    public boolean follow(@Valid Follower follower) {
-        return followerRepository.save(follower) != null;
+    public boolean follow(Follower follower) {
+        followerRepository.save(follower);
+        return true;
     }
 
     @Override
-    public int accept(@Valid Follower follower) {
+    public int accept(Follower follower) {
         return followerRepository.save(new Follower(follower.getFollowed(), follower.getFollower())).getId();
     }
 }
