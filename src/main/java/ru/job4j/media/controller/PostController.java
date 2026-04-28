@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -84,6 +85,7 @@ public class PostController {
             @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Post.class),
                     mediaType = "application/json") }),
             @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
+    @PreAuthorize("@securityService.isAuthor(#id, authentication.name) or hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<Void> update(@Valid @RequestPart("post") Post post,
                                        @Valid @RequestPart("file") MultipartFile file) throws IOException {
@@ -102,6 +104,7 @@ public class PostController {
             @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = Post.class),
                     mediaType = "application/json") }),
             @ApiResponse(responseCode = "400", content = { @Content(schema = @Schema()) }) })
+    @PreAuthorize("@securityService.isAuthor(#id, authentication.name) or hasRole('ADMIN')")
     @PatchMapping
     public ResponseEntity<Void> change(@Valid @RequestPart("post") Post post,
                                        @Valid @RequestPart("file") MultipartFile file) throws IOException {
