@@ -31,3 +31,5 @@ mvn spring-boot:run
 "status": "ok",
 "service": "social-media-api"
 }
+
+Подключение к Базе данных через файл application.yml
