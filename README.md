@@ -21,3 +21,13 @@ Spring Data JPA и транзакции;
 трассы OpenTelemetry в Jaeger;
 асинхронные уведомления;
 воспроизводимое развертывание через Docker Compose.
+
+Команда для запуска из консоли Windows PowerShell:
+mvn spring-boot:run
+
+После этого в браузере по ссылке http://localhost:8080/ping
+получить ответ:
+{
+"status": "ok",
+"service": "social-media-api"
+}
