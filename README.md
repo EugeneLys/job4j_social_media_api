@@ -33,3 +33,10 @@ mvn spring-boot:run
 }
 
 Подключение к Базе данных через файл application.yml
+
+**Команды запуска БД в Windows PowerShell:**
+Copy-**Item .env.example .env
+docker compose up -d
+./mvnw test
+./mvnw spring-boot:run
+docker compose down
